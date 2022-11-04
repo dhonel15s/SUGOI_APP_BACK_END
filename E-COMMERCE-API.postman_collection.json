@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "USER",
+			"name": "USERS",
 			"item": [
 				{
 					"name": "USER REGISTRATION - POST METHOD",
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"testacc3@mail.com\",\r\n    \"password\" : \"testacc3-pword\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"admin1@mail.com\",\r\n    \"password\" : \"admin1-pword\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"testacc1@mail.com\",\r\n    \"password\" : \"testacc1-pword\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"admin1@mail.com\",\r\n    \"password\" : \"admin1-pword\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,6 +62,70 @@
 							"path": [
 								"users",
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "PRODUCT CREATION - POST METHOD",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjQ2NGNjNzVmZTdkYWMyOGEzMjY0MyIsImVtYWlsIjoiYWRtaW4xQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjY3NTI0MDk0fQ._D3ZqcV68JLhdBngNP7coeoGrIiJRvfGlsSTbESPEho",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"testproduct2\",\r\n    \"description\" : \"testdescription2\",\r\n    \"price\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/products/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCT DISPLAY: ACTIVE - GET METHOD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/products/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"products",
+								"active"
 							]
 						}
 					},
