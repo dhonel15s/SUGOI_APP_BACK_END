@@ -7,7 +7,7 @@ const auth = require("../auth.js");
 const User = require("../models/User.js");
 
 
-// FUNCTIONS
+// FUNCTIONS------------------------------------------------------------------------
 module.exports.registerUser = (requestBody) => {
 
 	let newUser = new User({
@@ -23,7 +23,7 @@ module.exports.registerUser = (requestBody) => {
 		}else{
 			return `New user for (${newUser.email}) was successfully registered.`
 		}
-	})
+	});
 
 };
 
@@ -45,6 +45,6 @@ module.exports.loginUser = (requestBody) =>{
 				return `Sorry. Email and Password does not match.`
 			}
 		}
-	})
+	});
 
 };

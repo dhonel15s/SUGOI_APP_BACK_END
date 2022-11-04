@@ -9,13 +9,16 @@ const userController =  require("../controllers/userController.js");
 const auth = require("../auth.js")
 
 
-// ROUTES
+// ROUTES--------------------------------------------------------------
+
+// USER REGISTRATION
 router.post("/register", (request, response) => {
 	userController.registerUser(request.body)
 	.then(resultFromController => response.send(resultFromController));
 });
 
 
+// USER LOGIN
 router.post("/login", (request, response) => {
 	userController.loginUser(request.body)
 	.then(resultFromController => response.send(resultFromController));

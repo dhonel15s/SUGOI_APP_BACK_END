@@ -14,3 +14,48 @@ module.exports.createAccessToken = (user) => {
 
 	return jwt.sign(data, secret, {});
 };
+
+
+// TOKEN VERIFICATION
+module.exports.verify = (request, response, next) => {
+
+	let token = request.headers.authorization;
+
+	if(typeof token !== "undefined"){
+		token = token.slice(7, token.length);
+	
+
+		return jwt.verify(token, secret, (error, data) => {
+			if (error){
+				return response.send({
+					auth: `Token validation failed.`
+				});
+			}else{
+				next();
+			}
+		})
+
+	}else{
+		return response.send(`Token undefined. Please input access token.`);
+	}
+}
+
+
+// TOKEN DECODE
+module.exports.decode = (token) => {
+
+	if (typeof token !== "undefined") {
+
+		token = token.slice(7, token.length);
+
+		return jwt.verify(token, secret, (error, data) => {
+			if (error) {
+				return null;
+			}else{
+				return jwt.decode(token, {complete: true}).payload;
+			}
+		})
+	}else{
+		return null;
+	}
+}

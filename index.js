@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // DEPENDENCIES: Local
 const userRoutes = require("./routes/userRoutes.js")
+const productRoutes = require("./routes/productRoutes.js")
 
 
 // CREATE APPLICATION
@@ -33,6 +34,7 @@ app.use(express.urlencoded({extended:true}));
 
 // ROUTES
 app.use("/users", userRoutes);
+app.use("/products", productRoutes);
 
 
 // APP LISTENER
