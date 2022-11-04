@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"admin1@mail.com\",\r\n    \"password\" : \"admin1-pword\"\r\n}",
+							"raw": "{\r\n    \"firstName\" : \"Test\",\r\n    \"lastName\" : \"Three\",\r\n    \"email\" : \"testacc3@mail.com\",\r\n    \"password\" : \"testacc3-pword\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"admin1@mail.com\",\r\n    \"password\" : \"admin1-pword\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"testacc2@mail.com\",\r\n    \"password\" : \"testacc2-pword\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,7 +89,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"testproduct2\",\r\n    \"description\" : \"testdescription2\",\r\n    \"price\" : 2\r\n}",
+							"raw": "{\r\n    \"name\" : \"testproduct4\",\r\n    \"description\" : \"testdescription4\",\r\n    \"category\" : \"testcategory4\",\r\n    \"price\" : 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -126,6 +126,97 @@
 							"path": [
 								"products",
 								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCT DISPLAY:  SINGLE - GET METHOD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/products/6364852e95fbfa6237cf66cb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"products",
+								"6364852e95fbfa6237cf66cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCT UPDATE - PUT METHOD",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjQ3Yzk4YjA0YjRjMTE2NmE3MThkMyIsImVtYWlsIjoiYWRtaW4xQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjY3NTQ0NjExfQ.NK2c7N7f5QfOcWADqemJ7qqXBblutYlINmyNVvj6Nlw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"testproduct1\",\r\n\t\"description\" : \"testdescription1\",\r\n\t\"category\" : \"testcategory1\",\r\n    \"price\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/products/update/6364852e95fbfa6237cf66cb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"products",
+								"update",
+								"6364852e95fbfa6237cf66cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCT ARCHIVE- PUT METHOD",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjQ3Yzk4YjA0YjRjMTE2NmE3MThkMyIsImVtYWlsIjoiYWRtaW4xQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjY3NTQ2MDUzfQ.UKfQoZlx7OmHuKTOgqA2vgpQg1Gal8PNCpJPQTp6TTI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/products/archive/6364b9984b7715da7b5cdfac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"products",
+								"archive",
+								"6364b9984b7715da7b5cdfac"
 							]
 						}
 					},

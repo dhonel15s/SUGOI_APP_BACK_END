@@ -11,7 +11,7 @@ const auth = require("../auth.js");
 
 // ROUTES--------------------------------------------------------------
 
-// PRODUCT CREATION: ADMIN
+// PRODUCT CREATION: ADMIN ONLY
 router.post("/create", auth.verify, (request, response) => {
 	const isAdmin = auth.decode(request.headers.authorization).isAdmin;
 	productController.addProduct(request.body, isAdmin)
@@ -22,6 +22,29 @@ router.post("/create", auth.verify, (request, response) => {
 // PRODUCT DISPLAY: ALL ACTIVE
 router.get("/active", (request, response) => {
 	productController.getActiveProducts()
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// PRODUCT DISPLAY: SINGLE PRODUCT
+router.get("/:productId", (request, response) => {
+	productController.getProduct(request.params.productId)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// PRODUCT UPDATE INFO: ADMIN ONLY
+router.put("/update/:productId", auth.verify, (request, response) => {
+	const isAdmin = auth.decode(request.headers.authorization).isAdmin;
+	productController.updateProduct(request.params.productId, isAdmin, request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// PRODUCT ARCHIVE: ADMIN ONLY
+router.put("/archive/:productId", auth.verify, (request, response) => {
+	const isAdmin = auth.decode(request.headers.authorization).isAdmin;
+	productController.archiveProduct(request.params.productId, isAdmin)
 	.then(resultFromController => response.send(resultFromController));
 });
 

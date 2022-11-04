@@ -15,6 +15,11 @@ const productSchema = new mongoose.Schema({
 		required: [true, "Product Descripion is required."]
 	},
 
+	category: {
+		type: String,
+		required: [true, "Product Category is required."]
+	},
+
 	price: {
 		type: Number,
 		required: [true, "Product Price is required."]

@@ -8,9 +8,13 @@ const User = require("../models/User.js");
 
 
 // FUNCTIONS------------------------------------------------------------------------
+
+// USER REGISTRATION
 module.exports.registerUser = (requestBody) => {
 
 	let newUser = new User({
+		firstName: requestBody.firstName,
+		lastName: requestBody.lastName,
 		email : requestBody.email,
 		password : bcrypt.hashSync(requestBody.password, 10),
 		isAdmin : requestBody.isAdmin
@@ -21,13 +25,14 @@ module.exports.registerUser = (requestBody) => {
 		if(error){
 			return `Error in registering new user.`
 		}else{
-			return `New user for (${newUser.email}) was successfully registered.`
+			return `New user (${newUser.firstName} ${newUser.lastName}) successfully registered.`
 		}
 	});
 
 };
 
 
+// USER LOGIN
 module.exports.loginUser = (requestBody) =>{
 
 	return User.findOne({email : requestBody.email})
@@ -40,7 +45,7 @@ module.exports.loginUser = (requestBody) =>{
 
 			if(isPasswordCorrect){
 				let access = auth.createAccessToken(result);
-				return `Hi ${result.email}! Welcome to E-Commerce API. \n ACCESS TOKEN: \n ${access}`
+				return `Hi ${result.firstName} ${result.lastName}! Welcome to E-Commerce API. \n ACCESS TOKEN: \n ${access}`
 			}else{
 				return `Sorry. Email and Password does not match.`
 			}

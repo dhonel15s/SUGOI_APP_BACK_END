@@ -7,7 +7,11 @@ const orderSchema = new mongoose.Schema({
 	
 	userId: {
 		type: String,
-		required: [true, "Order ID is required."]
+		required: [true, "User ID is required."]
+	},
+
+	customerName: {
+		type: String
 	},
 
 	products: [{
@@ -20,7 +24,13 @@ const orderSchema = new mongoose.Schema({
 		quantity: {
 			type: Number,
 			required: [true, "Product Quantity is required."]
+		},
+
+		subtotal: {
+			type: Number,
+			default: 0
 		}
+
 	}],
 
 	totalAmount: {
