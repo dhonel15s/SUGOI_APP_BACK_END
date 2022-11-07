@@ -102,3 +102,24 @@ module.exports.addToCart = async (customer, requestBody) => {
 
 };
 
+
+
+// USER VIEW CART
+module.exports.viewCart = async (customer) => {
+	if (customer.isAdmin) {
+		let message = Promise.resolve(`Admins do not have cart.`);
+
+		return message.then((value) => {
+			return value;
+		});
+	} else {
+		return await Cart.find({userId : customer.userId})
+		.then(result => {
+			if(result.length === 0){
+				return `No cart found for (${customer.fullName}).`;
+			}else{
+				return `Number of Products in (${customer.fullName})'s cart: ${result[0].products.length}\n Total Amount: ${result[0].totalAmount} \n\nProducts: ${result}`;
+			}
+		});
+	}
+}

@@ -90,6 +90,17 @@ router.post("/addToCart", auth.verify, (request, response) => {
 	.then(resultFromController => response.send(resultFromController));
 });
 
+// VIEW CART
+router.get("/viewcart", auth.verify, (request, response) => {
+	let customer ={
+		fullName: auth.decode(request.headers.authorization).fullName,
+		userId: auth.decode(request.headers.authorization).id,
+		isAdmin: auth.decode(request.headers.authorization).isAdmin
+	}
+	cartController.viewCart(customer)
+	.then(resultFromController => response.send(resultFromController));
+});
+
 
 
 // EXPORT USER ROUTES
