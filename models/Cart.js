@@ -2,8 +2,8 @@
 const mongoose = require("mongoose");
 
 
-// ORDER SCHEMA
-const orderSchema = new mongoose.Schema({
+// CART SCHEMA
+const cartSchema = new mongoose.Schema({
 	
 	userId: {
 		type: String,
@@ -37,6 +37,11 @@ const orderSchema = new mongoose.Schema({
 			default: 1
 		},
 
+		addedOn: {
+			type: Date,
+			default: new Date()
+		},
+
 		subtotal: {
 			type: Number,
 			default: 0
@@ -47,15 +52,10 @@ const orderSchema = new mongoose.Schema({
 	totalAmount: {
 		type: Number,
 		default: 0
-	},
-
-	purchasedOn: {
-		type: Date,
-		default: new Date()
 	}
-	
+
 });
 
 
-// EXPORT ORDER SCHEMA
-module.exports = mongoose.model("Order", orderSchema);
+// EXPORT CART SCHEMA
+module.exports = mongoose.model("Cart", cartSchema);

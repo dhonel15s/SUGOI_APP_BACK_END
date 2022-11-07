@@ -23,9 +23,9 @@ module.exports.registerUser = (requestBody) => {
 	return newUser.save()
 	.then((newUser, error) => {
 		if(error){
-			return `Error in registering new user.`
+			return `Error in registering new user.`;
 		}else{
-			return `New user (${newUser.firstName} ${newUser.lastName}) successfully registered.`
+			return `New user (${newUser.firstName} ${newUser.lastName}) successfully registered.`;
 		}
 	});
 
@@ -39,17 +39,59 @@ module.exports.loginUser = (requestBody) =>{
 	.then(result => {
 
 		if (result == null) {
-			return `Sorry. User not found. Please register first.`
+			return `Sorry. User not found. Please register first.`;
 		}else{
 			const isPasswordCorrect = bcrypt.compareSync(requestBody.password, result.password)
 
 			if(isPasswordCorrect){
 				let access = auth.createAccessToken(result);
-				return `Hi ${result.firstName} ${result.lastName}! Welcome to E-Commerce API. \n ACCESS TOKEN: \n ${access}`
+				return `Hi ${result.firstName} ${result.lastName}! Welcome to E-Commerce API. \n ACCESS TOKEN: \n ${access}`;
 			}else{
-				return `Sorry. Email and Password does not match.`
+				return `Sorry. Email and Password does not match.`;
 			}
 		}
 	});
+
+};
+
+
+// USER DETAILS: SINGLE
+module.exports.getUserDetails = (userId) => {
+
+	return User.findById(userId)
+	.then(result => {
+		if (result == null) {
+			return `Sorry. User not found.`;
+		}else{
+			result.password = ``;
+			return result;
+		}
+	})
+
+};
+
+
+// USER SET AS ADMIN: ADMIN ONLY
+module.exports.addAdmin = (isAdmin, newAdminUserId) => {
+
+	if (isAdmin) {
+		return User.findByIdAndUpdate(newAdminUserId, {
+			isAdmin: true
+		})
+		.then((newAdmin, error) => {
+			if (error) {
+				return `Failed to set user (${newAdmin.firstName} ${newAdmin.lastName}) as admin.`;
+			}else{
+				return `User (${newAdmin.firstName} ${newAdmin.lastName}) successfully set as admin.`;
+			}
+		})
+	}else{
+		// IF NOT ADMIN
+		let message = Promise.resolve(`User must be admin to set other users as admin.`);
+
+		return message.then((value) => {
+			return value;
+		});
+	}
 
 };

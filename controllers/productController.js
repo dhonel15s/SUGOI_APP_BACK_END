@@ -56,7 +56,7 @@ module.exports.getActiveProducts = () => {
 
 
 // PRODUCT DISPLAY: SINGLE PRODUCT
-module.exports.getProduct = (productId) => {
+module.exports.getProductDetails = (productId) => {
 
 	return Product.findById(productId)
 	.then(result => {

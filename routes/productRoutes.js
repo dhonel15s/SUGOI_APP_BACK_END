@@ -28,7 +28,7 @@ router.get("/active", (request, response) => {
 
 // PRODUCT DISPLAY: SINGLE PRODUCT
 router.get("/:productId", (request, response) => {
-	productController.getProduct(request.params.productId)
+	productController.getProductDetails(request.params.productId)
 	.then(resultFromController => response.send(resultFromController));
 });
 
