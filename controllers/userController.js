@@ -10,24 +10,38 @@ const User = require("../models/User.js");
 // FUNCTIONS------------------------------------------------------------------------
 
 // USER REGISTRATION
-module.exports.registerUser = (requestBody) => {
+module.exports.registerUser = async (requestBody) => {
 
-	let newUser = new User({
-		firstName: requestBody.firstName,
-		lastName: requestBody.lastName,
-		email : requestBody.email,
-		password : bcrypt.hashSync(requestBody.password, 10),
-		isAdmin : requestBody.isAdmin
-	})
-
-	return newUser.save()
-	.then((newUser, error) => {
-		if(error){
-			return `Error in registering new user.`;
-		}else{
-			return `New user (${newUser.firstName} ${newUser.lastName}) successfully registered.`;
-		}
+	let existingAccount = await User.find({email : requestBody.email})
+	.then(account => {
+		return account;
 	});
+
+	if (existingAccount.length === 0) {
+
+		let newUser = new User({
+			firstName: requestBody.firstName,
+			lastName: requestBody.lastName,
+			email : requestBody.email,
+			password : bcrypt.hashSync(requestBody.password, 10),
+			isAdmin : requestBody.isAdmin
+		})
+
+		return newUser.save()
+		.then((newUser, error) => {
+			if(error){
+				return `Error in registering new user.`;
+			}else{
+				return `New user (${newUser.firstName} ${newUser.lastName}) successfully registered.`;
+			}
+		});
+	}else{
+		let message = Promise.resolve(`Sorry, the email (${requestBody.email}) is already used in an existing account.`);
+
+		return message.then((value) => {
+			return value;
+		});
+	}
 
 };
 
