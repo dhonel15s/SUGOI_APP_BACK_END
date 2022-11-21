@@ -10,14 +10,24 @@ const productSchema = new mongoose.Schema({
 		required: [true, "Product Name is required."]
 	},
 
+	category: {
+		type: String,
+		required: [true, "Product Category is required."]
+	},
+
+	imageLink: {
+		type: String,
+		required: [true, "Product Image Link is required."]
+	},
+
 	description: {
 		type: String,
 		required: [true, "Product Descripion is required."]
 	},
 
-	category: {
-		type: String,
-		required: [true, "Product Category is required."]
+	stocks: {
+		type: Number,
+		required: [true, "Product stock count is required."]
 	},
 
 	price: {

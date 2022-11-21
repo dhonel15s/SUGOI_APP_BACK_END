@@ -19,6 +19,11 @@ router.post("/register", (request, response) => {
 	.then(resultFromController => response.send(resultFromController));
 });
 
+// CHECK REGISTRATION EMAIL
+router.post("/checkEmail", (request, response) => {
+	userController.checkEmail(request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
 
 // USER LOGIN
 router.post("/login", (request, response) => {
@@ -41,8 +46,8 @@ router.post("/checkout", auth.verify , (request, response) => {
 
 
 // USER DETAILS: SINGLE
-router.get("/userDetails/:userId", auth.verify, (request, response) => {
-	userController.getUserDetails(request.params.userId)
+router.get("/details", auth.verify, (request, response) => {
+	userController.getUserDetails(auth.decode(request.headers.authorization).id)
 	.then(resultFromController => response.send(resultFromController));
 });
 
@@ -79,16 +84,17 @@ router.get("/orders", auth.verify, (request, response) => {
 
 
 // ADD TO CART
-router.post("/addToCart", auth.verify, (request, response) => {
+router.post("/addToCartMany", auth.verify, (request, response) => {
 	let customer = {
 		userId: auth.decode(request.headers.authorization).id,
 		fullName: auth.decode(request.headers.authorization).fullName,
 		isAdmin: auth.decode(request.headers.authorization).isAdmin	
 	}
 
-	cartController.addToCart(customer, request.body)
+	cartController.addToCartMany(customer, request.body)
 	.then(resultFromController => response.send(resultFromController));
 });
+
 
 // VIEW CART
 router.get("/viewcart", auth.verify, (request, response) => {
@@ -97,10 +103,49 @@ router.get("/viewcart", auth.verify, (request, response) => {
 		userId: auth.decode(request.headers.authorization).id,
 		isAdmin: auth.decode(request.headers.authorization).isAdmin
 	}
+
 	cartController.viewCart(customer)
 	.then(resultFromController => response.send(resultFromController));
 });
 
+
+// UPDATE ACCOUNT DETAILS
+router.put("/updateAccountInfo", auth.verify, (request, response) => {
+	let userId = auth.decode(request.headers.authorization).id;
+
+	userController.updateAccountInfo(userId, request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// CHANGE ACCOUNT PASSWORD
+router.put("/changePassword", auth.verify, (request, response) => {
+	let userId = auth.decode(request.headers.authorization).id;
+
+	userController.changePassword(userId, request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// DEACTIVATE ACCOUNT
+router.delete("/deactivate", auth.verify, (request, response) => {
+	let userId = auth.decode(request.headers.authorization).id;
+
+	userController.deactivateAccount(userId, request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// ADD TO CART: SINGLE PRODUCT
+router.post("/addToCart", auth.verify, (request, response) => {
+	let customer = {
+		userId: auth.decode(request.headers.authorization).id,
+		fullName: auth.decode(request.headers.authorization).fullName
+	}
+
+	cartController.addToCart(customer, request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
 
 
 // EXPORT USER ROUTES

@@ -29,7 +29,8 @@ module.exports.verify = (request, response, next) => {
 		return jwt.verify(token, secret, (error, data) => {
 			if (error){
 				return response.send({
-					auth: `Token validation failed.`
+					status: false,
+					message: `Token validation failed.`
 				});
 			}else{
 				next();
@@ -37,7 +38,10 @@ module.exports.verify = (request, response, next) => {
 		})
 
 	}else{
-		return response.send(`Token undefined. Please input access token.`);
+		return response.send({
+			status: false,
+			message: `Token undefined. Please input access token.`
+		});
 	}
 }
 
@@ -51,12 +55,18 @@ module.exports.decode = (token) => {
 
 		return jwt.verify(token, secret, (error, data) => {
 			if (error) {
-				return null;
+				return {
+					status: false,
+					message: `Token decoding failed.`
+				}
 			}else{
 				return jwt.decode(token, {complete: true}).payload;
 			}
 		})
 	}else{
-		return null;
+		return {
+			status: false,
+			message: `Token undefined. Please input access token.`
+		};
 	}
 }

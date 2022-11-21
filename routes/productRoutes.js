@@ -25,6 +25,11 @@ router.get("/active", (request, response) => {
 	.then(resultFromController => response.send(resultFromController));
 });
 
+// PRODUCT DISPLAY: ALL ACTIVE
+router.get("/all", (request, response) => {
+	productController.getAllProducts()
+	.then(resultFromController => response.send(resultFromController));
+});
 
 // PRODUCT DISPLAY: SINGLE PRODUCT
 router.get("/:productId", (request, response) => {
@@ -45,6 +50,13 @@ router.put("/update/:productId", auth.verify, (request, response) => {
 router.put("/archive/:productId", auth.verify, (request, response) => {
 	const isAdmin = auth.decode(request.headers.authorization).isAdmin;
 	productController.archiveProduct(request.params.productId, isAdmin)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+// PRODUCT UNARCHIVE: ADMIN ONLY
+router.put("/unarchive/:productId", auth.verify, (request, response) => {
+	const isAdmin = auth.decode(request.headers.authorization).isAdmin;
+	productController.unarchiveProduct(request.params.productId, isAdmin)
 	.then(resultFromController => response.send(resultFromController));
 });
 
