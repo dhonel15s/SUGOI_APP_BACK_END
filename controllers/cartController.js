@@ -231,6 +231,7 @@ module.exports.addToCart = async (customer, requestBody) => {
 						productName: result2.name,
 						productPrice: result2.price,
 						productImageLink: result2.imageLink,
+						productDescription: result2.description,
 						quantity: 1,
 						// COMPUTE FOR SUBTOTAL: PER PRODUCT
 						subtotal: result2.price
@@ -315,6 +316,7 @@ module.exports.addToCart = async (customer, requestBody) => {
 						productId: requestBody.productId,
 						productName: result3.name,
 						productImageLink: result3.imageLink,
+						productDescription: result3.description,
 						productPrice: result3.price,
 						quantity: 1,
 						// COMPUTE FOR SUBTOTAL: PER PRODUCT
@@ -391,4 +393,84 @@ module.exports.viewCart = async (customer) => {
 			}
 		});
 	}
-}
+};
+
+
+// MODIFY PRODUCT DETAILS IN CART
+module.exports.updateCart = async (requestBody) => {
+
+	let cart = await Cart.find({userId : requestBody.userId});
+	let index = cart[0].products.findIndex( item => item.productId === requestBody.productId);
+
+	cart[0].totalAmount -= cart[0].products[index].quantity*cart[0].products[index].productPrice;
+	cart[0].products[index].quantity = requestBody.quantity;
+	cart[0].products[index].subtotal = requestBody.quantity*cart[0].products[index].productPrice;
+	cart[0].totalAmount += requestBody.quantity*cart[0].products[index].productPrice;
+
+	// SAVE
+	return cart[0].save()
+	.then((updatedCart, error) => {
+		if (error) {
+			return {
+				status: false,
+				message: `Failed to update cart.`
+			}
+		}else{
+			return {
+				status: true,
+				message: `Cart successfully updated.`
+			}
+		}
+	});
+	
+};
+
+
+
+// REMOVE PRODUCT FROM A CART
+module.exports.removeFromCart = async (requestBody) => {
+
+	let cart = await Cart.find({userId : requestBody.userId});
+	let index = cart[0].products.findIndex( item => item.productId === requestBody.productId);
+	cart[0].totalAmount -= cart[0].products[index].subtotal;
+	cart[0].products.splice(index, 1);
+
+	// SAVE
+	return cart[0].save()
+	.then((updatedCart, error) => {
+		if (error) {
+			return {
+				status: false,
+				message: `Failed to update cart.`
+			}
+		}else{
+			return {
+				status: true,
+				message: `Cart successfully updated.`
+			}
+		}
+	});
+	
+};
+
+
+// CLEAR CART
+module.exports.clearCart = async (userId) => {
+
+	let cart = await Cart.find({userId: userId})
+
+	return Cart.findByIdAndDelete(cart[0]._id)
+	.then((deletedCart, error) => {
+		if (error) {
+			return {
+				status: false,
+				message: `Failed to clear cart.`
+			};
+		}else{
+			return {
+				status: true,
+				message: `Cart successfully cleared.`
+			};
+		}
+	})
+};

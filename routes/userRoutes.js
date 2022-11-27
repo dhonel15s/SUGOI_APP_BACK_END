@@ -44,6 +44,12 @@ router.post("/checkout", auth.verify , (request, response) => {
 	.then(resultFromController => response.send(resultFromController));
 });
 
+/*// ADD TO ORDER: SINGLE PRODUCT
+router.post("/checkout/addToOrder", (request, response) => {
+	orderController.addToOrder(request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+*/
 
 // USER DETAILS: SINGLE
 router.get("/details", auth.verify, (request, response) => {
@@ -146,6 +152,23 @@ router.post("/addToCart", auth.verify, (request, response) => {
 	cartController.addToCart(customer, request.body)
 	.then(resultFromController => response.send(resultFromController));
 });
+
+
+// MODIFY PRODUCT DETAILS IN CART
+router.put("/carts/update", (request, response) => {
+	cartController.updateCart(request.body)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+// CLEAR CART
+router.delete("/carts/clearcart", auth.verify, (request, response) => {
+	cartController.clearCart(auth.decode(request.headers.authorization).id)
+	.then(resultFromController => response.send(resultFromController));
+});
+
+
+
 
 
 // EXPORT USER ROUTES

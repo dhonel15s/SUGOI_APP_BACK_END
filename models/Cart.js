@@ -32,6 +32,11 @@ const cartSchema = new mongoose.Schema({
 			required: [true, "Product Image Link is required."]
 		},
 
+		productDescription: {
+			type: String,
+			required: [true, "Product Descripion is required."]
+		},
+
 		productPrice: {
 			type: Number,
 			required: [true, "Product Price is required."]
